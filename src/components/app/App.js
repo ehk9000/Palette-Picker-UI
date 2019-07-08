@@ -1,7 +1,33 @@
-import React from 'react';
+import React,{ Component } from 'react';
 
-function App() {
-  return (
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      projects: [],
+      palettes: []
+    }
+  }
+
+  componentDidMount() {
+    this.getProjects()
+    this.getPalettes()
+  } 
+
+  getProjects = async () => {
+    const response = await fetch('http://localhost:3000/api/v1/projects');
+    const projects = await response.json();
+    this.setState({projects});
+  }
+
+  getPalettes = async () => {
+    const response = await fetch('http://localhost:3000/api/v1/palettes');
+    const palettes = await response.json();
+    this.setState({palettes});
+  } 
+
+  render() {
+    return (
     <div className="App">
       <header>
         <h1>Color-Me-Newton</h1>
@@ -45,6 +71,7 @@ function App() {
       </main>
     </div>
   );
+  }
 }
 
 export default App;
