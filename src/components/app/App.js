@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import { Route } from 'react-router-dom';
 import Header from '../header';
-import Control_form  from '../control_form';
+import ControlForm  from '../control_form';
 
 class App extends Component {
   constructor() {
@@ -33,7 +33,9 @@ class App extends Component {
     return (
     <div className="App">
       <Header />
-      <Route path="/" component={Control_form} />
+      <main>
+        <Route path="/" component={ControlForm} />
+      </main>
     </div>
   );
 

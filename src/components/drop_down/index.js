@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 const DropDown = () => {
   return (
-    <section className="Drop_down">
+    <section className="DropDown">
       <NavLink to="/">Create Project</NavLink>
+      <div className="divider" />
       <NavLink to="/projects">Explore Projects</NavLink>
     </section>
   );
