@@ -1,10 +1,9 @@
 import React from 'react';
 
-const Project = (props) => {
+const Project = ({name}) => {
   return(
     <section>
-
-      
+      <h3>{name}</h3>
     </section>
   )
 }

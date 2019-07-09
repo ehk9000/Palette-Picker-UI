@@ -32,7 +32,6 @@ class ColorGenerator extends Component {
   handleLock = (e) => {
     const { id } = e.target;
     let color = this.state[id];
-    console.log(id, color)
     // const lock = 'lock';
     // const unlock = 'lock-open';
 

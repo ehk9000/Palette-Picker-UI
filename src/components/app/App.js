@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchAllProjects } from '../../thunks/fetchAllProjects';
+import  Project_list from '../../containers/Project_list';
 import Header from '../header';
 import Control_form  from '../control_form';
 
@@ -35,11 +36,11 @@ class App extends Component {
     return (
     <div className="App">
       <Header />
-      <Route path="/" component={Control_form} />
+      <Route exact path="/" component={Control_form} />
+      <Route path="/projects" component={Project_list} />
     </div>
   );
 
-    // <Route path="/projects" component={Project_list} />
     // <Route path="/palettes" component={Palettes_list} />
   }
 }
