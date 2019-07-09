@@ -23,6 +23,7 @@ export const projectsReducer = (state = [], action) => {
       })
 
       return filteredState;
+      
     default:
       return state
   }
