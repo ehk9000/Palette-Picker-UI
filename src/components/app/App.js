@@ -1,5 +1,7 @@
 import React,{ Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchAllProjects } from '../../thunks/fetchAllProjects';
 import Header from '../header';
 import Control_form  from '../control_form';
 
@@ -13,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getProjects()
+    this.props.fetchAllProjects()
     this.getPalettes()
   } 
 
@@ -42,4 +44,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({projects, palettes}) => ({
+  projects,
+  palettes
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchAllProjects: () => dispatch(fetchAllProjects()) 
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
