@@ -1,0 +1,53 @@
+header {
+  position: relative;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drop_down-toggle {
+  i {
+    font-size: 24px;
+
+    &:hover {
+      color: $inputColor-hover;
+    }
+  }
+}
+
+.DropDown {
+  background: white;
+  box-shadow: $shadow-box;
+  box-sizing: border-box;
+  padding: 15px;
+  position: absolute;
+  z-index: 2;
+  height: 100px;
+  width: 190px;
+  bottom: -100px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+
+  .divider {
+    content: '';
+    height: 1.5px;
+    width: 160px;
+    background: gray;
+  }
+
+  a {
+    font-size: 22px;
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: $inputColor-hover;
+    }
+  }
+}

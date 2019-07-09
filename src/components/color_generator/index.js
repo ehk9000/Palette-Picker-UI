@@ -77,7 +77,7 @@ class ColorGenerator extends Component {
     })
 
     return (
-      <form className="palette-form">
+      <form className="ColorGenerator">
         <input
           name="palette_name"
           onChange={e => this.handleName(e)}

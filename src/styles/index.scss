@@ -1,3 +1,6 @@
 @import './normalize.scss';
 @import '../components/app/App';
+@import './variable.scss';
+
+@import '../components/header/header';
 @import '../components/control_form/control_form';
