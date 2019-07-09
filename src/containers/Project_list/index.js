@@ -28,7 +28,6 @@ class Project_list extends Component {
        {displayProjects}
      </div>
    )
-
  }
 
 }

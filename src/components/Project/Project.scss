@@ -1,12 +1,39 @@
 .project-title {
   padding-right: 30px;
-
+  margin-bottom: 40px;
 }
 
 .title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  padding: 0 25px;
   border: 2px grey solid;
-  border-radius: 25px;
-  width: 300px;
-  align-self: center;
+  border-radius: 40px;
+  height: 6rem;
+  width: 30rem;
   margin: 15px;
+  box-sizing: border-box;
+
+  h3 {
+    margin: 0;
+    font-size: 32px;
+    
+    &:hover {
+      color: purple;
+    }
+  }
+}
+
+.delete-btn {
+  display: inline;
+  position: relative;
+  font-size: 24px;
+  text-shadow: 2px 1px 1px silver;
+}
+
+.click-bait {
+  // visibility: hidden;
+
 }
