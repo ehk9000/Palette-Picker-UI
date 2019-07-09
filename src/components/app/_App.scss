@@ -8,7 +8,7 @@
 
 header {
   background: #EFEFEF;
-  border-bottom: 2px lime solid;
+  border-bottom: 2px silver solid;
   box-sizing: border-box;
   height: 100%;
 }
@@ -17,54 +17,5 @@ main {
   background: #EFEFEF;
   box-sizing: border-box;
   height: 100%;
-  padding: 10%;
-}
-
-.field-container {
-  background: white;
-  height: 100%;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  grid-template-areas: "ladder form";
-  grid-template-columns: 40% 60%;
-  grid-template-rows: 100%;
-}
-
-.color-ladder {
-  grid-area: ladder;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.show_color {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  border: solid lime 2px;
-  margin: 15px;
-  width: 150px;
-}
-
-.box {
-  content: '';
-  height: 25px;
-  width: 25px;
-  background: magenta;
-}
-
-.proj-form {
-  grid-area: form;
-  display: grid;
-  grid-gap: 5px;
-  grid-template: 
-    "proj-title proj-title" 50px
-    "proj-color1 proj-color2" 50px
-    "proj-color3 proj-color4" 50px
-    "proj-color5 proj-save" 50px;
-}
-
-.proj-title {
-  grid-area: proj-title;
+  padding: 3%;
 }

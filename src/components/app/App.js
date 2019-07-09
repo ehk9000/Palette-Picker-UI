@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchAllProjects } from '../../thunks/fetchAllProjects';
 import  Project_list from '../../containers/Project_list';
 import Header from '../header';
-import Control_form  from '../control_form';
+import ControlForm  from '../control_form';
 
 class App extends Component {
   constructor() {
@@ -38,6 +38,7 @@ class App extends Component {
       <Header />
       <Route exact path="/" component={Control_form} />
       <Route path="/projects" component={Project_list} />
+
     </div>
   );
 
