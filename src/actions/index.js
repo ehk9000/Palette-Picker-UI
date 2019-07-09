@@ -8,6 +8,16 @@ export const addAllPalettes = (palettes) => ({
   palettes
 })
 
+export const addProject = (project) => ({
+  type: 'ADD_PROJECT',
+  project
+})
+
+export const addPalette = (palette) => ({
+  type: 'ADD_PALETTE',
+  palette
+})
+
 export const updateProject = (project) => ({
   type: 'UPDATE_PROJECT',
   project
