@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import { Route, NavLink} from 'react-router-dom';
+import Header from '../header';
 import Control_form  from '../control_form';
 
 class App extends Component {
@@ -31,14 +32,7 @@ class App extends Component {
   render() {
     return (
     <div className="App">
-      <header>
-        <h1>Color-Me-Newton</h1>
-        <section className="drop">
-          <NavLink to='/'>Create Project</NavLink>
-          <NavLink to='/projects'>Explore Projects</NavLink>
-          <NavLink to='/palettes'>Explore Palettes</NavLink>
-        </section>
-      </header>
+      <Header />
       <Route path="/" component={Control_form} />
     </div>
   );
