@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme'
-import { ControlForm } from './index';
+import { ControlForm, mapStateToProps, mapDispatchToProps } from './index';
 
 describe('ControlForm', () => {
   let wrapper;
