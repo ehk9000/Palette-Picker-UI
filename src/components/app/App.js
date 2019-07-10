@@ -7,7 +7,7 @@ import  Project_list from '../../containers/Project_list';
 import ControlForm from '../control_form/index';
 import Header from '../header';
 
-class App extends Component {
+export class App extends Component {
   constructor() {
     super()
     this.state = {
