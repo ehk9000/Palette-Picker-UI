@@ -6,48 +6,76 @@ class ColorGenerator extends Component {
     this.state = {
       id: 0,
       palette_name: '',
-      color1: {hex: '', lockType: 'lock-open'},
-      color2: {hex: '', lockType: 'lock-open'},
-      color3: {hex: '', lockType: 'lock-open'},
-      color4: {hex: '', lockType: 'lock-open'},
-      color5: {hex: '', lockType: 'lock-open'}
+      colors: [{}, {}, {}, {}, {}]
     }
+  }
+
+  componentDidMount() {
+    this.generateColors()
+  }
+
+  generateColors = () => {
+    const colors = this.state.colors.map(color => {
+      return {hex: this.generateHex(), locked: false};
+    })
+    this.setState({colors});
+  }
+
+  generateHex = () => {
+    const characters = "0123456789ABCDEF";
+    let hex = '';
+    for (let i = 0; i< 6; i++) {
+      hex += characters[(Math.floor(Math.random() * 16))];
+    }
+    return hex;
   }
 
   handleName = (e) => {
     const { name, value } = e.target;
-
     this.setState({ [name]: value })
   }
 
-  handleColor = (e) => {
-    const { name, value } = e.target;
-
-    let color = this.state[name];
-    color.hex = value;
-
-    this.setState({ [name]: color });
+  updateColor = (e) => {
+    const newHex = e.target.value;
+    const i = e.target.closest('.color-field').getAttribute('data-key');
+    let state = {...this.state};
+    state.colors[i].hex = newHex;
+    this.setState(state);
   }
 
   handleLock = (e) => {
-    const { id } = e.target;
-    let color = this.state[id];
-    // const lock = 'lock';
-    // const unlock = 'lock-open';
-
-    if (color.lockType === 'lock') {
-      color.lockType = 'lock-open';
-    } else {
-      color.lockType = 'lock'
-    }
-
-    this.setState({ [id]: color })
+    const i = e.target.closest('.color-field').getAttribute('data-key');
+    const { colors } = this.state;
+    colors[i].locked = !colors[i].locked;
+    this.setState({ colors })
   }
 
   render() {
-    let {palette_name, color1, color2, color3, color4, color5} = this.state;
+    const {palette_name, colors} = this.state;
+    const colorFields = colors.map((colorObj, index) => {
+      const lockType = colorObj.locked ? 'lock' : 'lock-open';
+      const i = index + 1;
+      return (
+        <fieldset key={index} data-key={index} className="color-field">
+          <div id={`box${i}`}
+            className="color-display" 
+            style={{background: `#${colorObj.hex}`}}>
+            <i id={`color${i}`}
+              className={`fas fa-${lockType}`}
+              onClick={(e) => this.handleLock(e)} />
+          </div>
+          <input
+            name={`color${i}`}
+            onChange={(e) => this.updateColor(e)}
+            value={this.state.colors[index].hex}
+            className="palette-color"
+            type="text"
+            maxLength="6"
+          />
+        </fieldset>
+      )
+    })
 
-    console.log('CG_state:', this.state)
     return (
       <form className="ColorGenerator">
         <input
@@ -59,101 +87,7 @@ class ColorGenerator extends Component {
           placeholder="Palette Name"
           maxLength="10"
         />
-        <fieldset className="color-field">
-          <div id="box1"
-            className="color-display" 
-            style={{color: color1.hex}}>
-            <i id="color1"
-              className={`fas fa-${color1.lockType}`}
-              onClick={(e) => this.handleLock(e)} />
-          </div>
-          <input
-            name="color1"
-            onChange={e => this.handleColor(e)}
-            value={color1.hex}
-            className="palette-color"
-            type="text"
-            placeholder="color1"
-            maxLength="7"
-            minLength="6"
-          />
-        </fieldset>
-        <fieldset className="color-field">
-          <div id="box2" 
-            className="color-display" 
-            style={{color: color2.hex}}>
-            <i id="color2"
-              className={`fas fa-${color2.lockType}`}
-              onClick={(e) => this.handleLock(e)} />
-          </div>
-          <input
-            name="color2"
-            onChange={e => this.handleColor(e)}
-            value={color2.hex}
-            className="palette-color"
-            type="text"
-            placeholder="color2"
-            maxLength="7"
-            minLength="6"
-          />
-        </fieldset>
-        <fieldset className="color-field">
-          <div id="box3" 
-            className="color-display" 
-            style={{color: color3.hex}}>
-            <i id="color3"
-              className={`fas fa-${color3.lockType}`}
-              onClick={(e) => this.handleLock(e)} />
-          </div>
-          <input
-            name="color3"
-            onChange={e => this.handleColor(e)}
-            value={color3.hex}
-            className="palette-color"
-            type="text"
-            placeholder="color3"
-            maxLength="7"
-            minLength="6"
-          />
-        </fieldset>
-        <fieldset className="color-field">
-          <div id="box4" 
-            className="color-display" 
-            style={{color: color4.hex}}>
-            <i id="color4"
-              className={`fas fa-${color4.lockType}`}
-              onClick={(e) => this.handleLock(e)} />
-          </div>
-          <input
-            name="color4"
-            onChange={e => this.handleColor(e)}
-            value={color4.hex}
-            className="palette-color"
-            type="text"
-            placeholder="color4"
-            maxLength="7"
-            minLength="6"
-          />
-        </fieldset>
-        <fieldset className="color-field">
-          <div id="box5" 
-            className="color-display" 
-            style={{color: color5.hex}}>
-            <i id="color5"
-              className={`fas fa-${color5.lockType}`}
-              onClick={(e) => this.handleLock(e)} />
-          </div>
-          <input
-            name="color5"
-            onChange={e => this.handleColor(e)}
-            value={color5.hex}
-            className="palette-color"
-            type="text"
-            placeholder="color5"
-            maxLength="7"
-            minLength="6"
-          />
-        </fieldset>
+        {colorFields}
         <fieldset className="palette-controls">
           <input className="palette-save" type="submit" value="SAVE" />
           <button className="palette-delete">Delete</button>
