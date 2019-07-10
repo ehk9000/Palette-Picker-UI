@@ -12,10 +12,10 @@ class ControlForm extends Component {
   }
 
   componentDidMount() {
-    let { palettes, project } = this.props
-    if (palettes.length && project.id) {
+    let { palettes, currentProject } = this.props
+    if (palettes.length && currentProject.id) {
       palettes = palettes.filter(palette => {
-        return palette.project_id === project.id;
+        return palette.project_id === currentProject.id;
       })
       if (palettes) this.setState({ palettes })
     }
@@ -55,7 +55,7 @@ class ControlForm extends Component {
     return (
       <section className="ControlForm">
         <form className="project">
-          <input type="test" placeholder="Project Title" value={this.props.project.name}/>
+          <input type="test" placeholder="Project Title" value={this.props.currentProject.name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
             <button className="project-delete">Delete</button>
@@ -71,7 +71,7 @@ class ControlForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  project: state.project,
+  currentProject: state.currentProject,
   palettes: state.palettes
 })
 

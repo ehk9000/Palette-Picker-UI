@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
-import { projectReducer } from './projectReducer';
+import { currentProjectReducer } from './currentProjectReducer';
+import { currentPaletteReducer } from './currentPaletteReducer';
 import { projectsReducer } from './projectsReducer';
 import { palettesReducer } from './palettesReducer';
 import { isLoadingReducer } from './isLoadingReducer';
 import { errorReducer } from './errorReducer';
 
 export const rootReducer = combineReducers({
-  project: projectReducer,
+  currentProject: currentProjectReducer,
+  currentPalette: currentPaletteReducer,
   projects: projectsReducer,
   palettes: palettesReducer,
   isLoading: isLoadingReducer,
