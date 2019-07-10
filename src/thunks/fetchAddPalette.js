@@ -2,7 +2,7 @@ import { addPalette, setLoading, setError } from '../actions';
 
 export const fetchAddPalette = (palette) => {
   return async (dispatch) => {
-    const url ='http://localhost:3001/api/v1/palettes';
+    const url = 'http://localhost:3000/api/v1/palettes';
     const body = {
       color_1: palette.color_1,
       color_2: palette.color_2,

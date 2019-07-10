@@ -3,12 +3,11 @@ import { setLoading, setError, deleteProject } from '../actions';
 export const fetchDeleteProject = (id) => {
   return async (dispatch) => {
     const options = {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json' }
+      method: 'DELETE'
     }
 
-    const url = `http://localhost:3001/api/v1/projects/${id}`
-
+    const url = `http://localhost:3000/api/v1/projects/${id}`;
+    
     try {
       dispatch(setLoading(true))
 
