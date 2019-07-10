@@ -1,14 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { DropDown } from './index'
+import { ColorGenerator } from './index';
 
-describe('DropDown', () => {
+describe('Color Generator', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow( <DropDown/>)
-  })
+    wrapper = shallow ( <ColorGenerator/> )
+  });
+
   it('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
-  })
-})
+  });
+});

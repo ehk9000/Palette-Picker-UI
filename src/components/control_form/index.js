@@ -52,7 +52,7 @@ const samplePalettes = [
   }
 ]
 
-class ControlForm extends Component {
+export class ControlForm extends Component {
   constructor() {
     super()
     this.state = {

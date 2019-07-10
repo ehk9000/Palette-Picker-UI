@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ColorGenerator extends Component {
+export class ColorGenerator extends Component {
   constructor({ savePalette }) {
     super({ savePalette })
     this.state = {
