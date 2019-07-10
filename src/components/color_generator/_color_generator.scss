@@ -1,0 +1,89 @@
+.ColorGenerator {
+  background: lavender;
+  border-top: 1.5px ridge lavender;
+  border-bottom: 1.5px ridge lavender;
+}
+
+.palette-head {
+  box-sizing: border-box;
+  padding: 20px 35px;
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.palette-controls {
+  width: 290px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.palette-shuffle,
+.palette-save,
+.palette-delete {
+  height: 2.5rem;
+  border-radius: 40px;
+
+  i {
+    padding: 0 8px;
+    font-size: 20px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: $inputColor-hover;
+  }
+}
+
+.palette-name {
+  height: 2.5rem;
+  width: 240px;
+  box-sizing: border-box;
+  padding: 0 15px;
+  border-radius: 40px;
+}
+
+.colorField-container {
+  box-sizing: border-box;
+  position: relative;
+  padding: 10px;
+  height: 75%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+
+  i {
+    text-shadow: white .8px .8px 1px;
+
+    &:hover {
+      color: white;
+      cursor: pointer;
+      text-shadow: black .8px .8px 1px;
+    }
+  }
+}
+
+.color-field {
+  border: none;
+  box-sizing: border-box;
+
+  input {
+    border: none;
+    height: 35px;
+    padding: 0 15px;
+  }
+}
+
+.color-display {
+  content: '';
+  position: relative;
+  height: 200px;
+  width: 100%;
+
+  i {
+    position: absolute;
+    bottom: 10px;
+    left: 45%;
+  }
+}

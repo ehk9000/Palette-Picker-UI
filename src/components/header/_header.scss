@@ -9,12 +9,18 @@ header {
 }
 
 .drop_down-toggle {
+  box-sizing: border-box;
+  h3 {
+    margin: 0 15px;
+    display: inline-block;
+  }
   i {
     font-size: 24px;
+  }
 
-    &:hover {
-      color: $inputColor-hover;
-    }
+  &:hover {
+    cursor: pointer;
+    color: $inputColor-hover;
   }
 }
 

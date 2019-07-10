@@ -1,5 +1,4 @@
 import React from 'react';
-import './Project.scss';
 
 const Project = ({name}) => {
   return(

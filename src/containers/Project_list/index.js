@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Project from '../../components/Project/index';
-import './Project_list.scss';
-
 
 class Project_list extends Component {
   assignProjects = () => {
