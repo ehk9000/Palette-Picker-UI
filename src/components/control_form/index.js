@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
+import { selectCurrentPalette } from '../../actions';
 
 class ControlForm extends Component {
   constructor() {
     super()
     this.state = {
       project_name: '',
-      palettes: []
+      currentPalette: {id: null, colors: [{}]},
+      project_palettes: []
     }
   }
 
@@ -17,14 +19,15 @@ class ControlForm extends Component {
       palettes = palettes.filter(palette => {
         return palette.project_id === currentProject.id;
       })
-      if (palettes) this.setState({ palettes })
+      if (palettes) this.setState({ project_name: currentProject.name, project_palettes: palettes })
     }
   }
 
   mapPalettes = () => {
-    return this.state.palettes.map(pal => {
+    return this.state.project_palettes.map(pal => {
+      console.log('pal', pal)
       return (
-        <article className="palette-item">
+        <article key={pal.id} onClick={(pal) => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
           <div className="colors-preview">
             {this.displayColors(pal)}
@@ -51,11 +54,16 @@ class ControlForm extends Component {
     return divColors;
   }
 
+  handleChange(e) {
+    const {name, value} = e.target
+    this.setState({[name]: value})
+  }
+
   render() {
     return (
       <section className="ControlForm">
         <form className="project">
-          <input type="test" placeholder="Project Title" value={this.props.currentProject.name}/>
+          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
             <button className="project-delete">Delete</button>
@@ -63,7 +71,7 @@ class ControlForm extends Component {
         </form>
         <ColorGenerator />
         <section className="palettes">
-          {this.state.palettes.length > 0 && this.mapPalettes()}
+          {this.state.project_palettes.length > 0 && this.mapPalettes()}
         </section>
       </section>
     );
@@ -73,6 +81,10 @@ class ControlForm extends Component {
 const mapStateToProps = (state) => ({
   currentProject: state.currentProject,
   palettes: state.palettes
-})
+});
 
-export default connect(mapStateToProps)(ControlForm);
+const mapDispatchToProps = (dispatch) => ({
+  selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ControlForm);

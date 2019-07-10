@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class ColorGenerator extends Component {
   constructor() {
     super()
     this.state = {
-      id: 0,
       palette_name: '',
       colors: [{}, {}, {}, {}, {}]
     }
   }
 
   componentDidMount() {
+    const {currentPalette} = this.props;
+    let palette_name = currentPalette.name;
+    let colors = [
+      currentPalette.color_1, currentPalette.color_2, currentPalette.color_3, currentPalette.color_4, currentPalette.color_5
+    ]
+
+    this.setState({palette_name, colors})
     this.generateColors()
   }
 
@@ -52,7 +59,8 @@ class ColorGenerator extends Component {
 
   render() {
     const {palette_name, colors} = this.state;
-    const colorFields = colors.map((colorObj, index) => {
+    console.log(colors[0].id)
+    const colorFields = colors[0].id && colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
       const i = index + 1;
       return (
@@ -111,4 +119,10 @@ class ColorGenerator extends Component {
   }
 }
 
-export default ColorGenerator;
+const mapStateToProps = (state) => ({
+  currentProject: state.currentProject,
+  currentPalette: state.currentPalette,
+  palettes: state.palettes
+})
+
+export default connect(mapStateToProps)(ColorGenerator);
