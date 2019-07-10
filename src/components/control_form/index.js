@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
+import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
 
 export class ControlForm extends Component {
   constructor() {
@@ -24,7 +25,6 @@ export class ControlForm extends Component {
 
   mapPalettes = () => {
     return this.state.project_palettes.map(pal => {
-      console.log('pal', pal)
       return (
         <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
@@ -46,10 +46,8 @@ export class ControlForm extends Component {
           style={{background: `#${palette[`color_${i}`]}`}} 
         />
       )
-
       divColors.push(tag)
     }
-
     return divColors;
   }
 
@@ -59,13 +57,14 @@ export class ControlForm extends Component {
   }
 
   render() {
+    const { deleteProject, currentProject } = this.props;
     return (
       <section className="ControlForm">
         <form className="project">
           <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
-            <button className="project-delete">Delete</button>
+            <button className="project-delete" onClick={() => deleteProject(currentProject.id)}>Delete</button>
           </div>
         </form>
         <ColorGenerator />
@@ -83,7 +82,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette))
+  selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette)),
+  deleteProject: (id) => dispatch(fetchDeleteProject(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlForm);
