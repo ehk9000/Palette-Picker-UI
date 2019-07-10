@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 class ColorGenerator extends Component {
-  constructor({ savePalette }) {
-    super({ savePalette })
+  constructor() {
+    super()
     this.state = {
       id: 0,
       palette_name: '',
@@ -24,7 +24,7 @@ class ColorGenerator extends Component {
   generateHex = () => {
     const characters = "0123456789ABCDEF";
     let hex = '';
-    for (let i = 0; i< 6; i++) {
+    for (let i = 0; i < 6; i++) {
       hex += characters[(Math.floor(Math.random() * 16))];
     }
     return hex;

@@ -1,63 +1,23 @@
 import React, {Component} from 'react';
 import ColorGenerator from '../color_generator';
-
-const samplePalettes = [
-  {
-    name: "palette_1",
-    color_1: "69619C",
-    color_2: "67615C",
-    color_3: "19e19C",
-    color_4: "11619C",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_2",
-    color_1: "F2D1C9",
-    color_2: "8332AC",
-    color_3: "E086D3",
-    color_4: "6290C8",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_1",
-    color_1: "69619C",
-    color_2: "67615C",
-    color_3: "19e19C",
-    color_4: "11619C",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_2",
-    color_1: "F2D1C9",
-    color_2: "8332AC",
-    color_3: "E086D3",
-    color_4: "6290C8",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_2",
-    color_1: "F2D1C9",
-    color_2: "8332AC",
-    color_3: "E086D3",
-    color_4: "6290C8",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_1",
-    color_1: "69619C",
-    color_2: "67615C",
-    color_3: "19e19C",
-    color_4: "11619C",
-    color_5: "69214e"
-  }
-]
+import { connect } from 'react-redux';
 
 class ControlForm extends Component {
   constructor() {
     super()
     this.state = {
       project_name: '',
-      palettes: samplePalettes
+      palettes: []
+    }
+  }
+
+  componentDidMount() {
+    let { palettes, project } = this.props
+    if (palettes.length && project.id) {
+      palettes = palettes.filter(palette => {
+        return palette.project_id === project.id;
+      })
+      if (palettes) this.setState({ palettes })
     }
   }
 
@@ -75,13 +35,14 @@ class ControlForm extends Component {
   }
 
   displayColors = (palette) => {
-    let divColors= [];
+    let divColors = [];
     
     for (let i = 1; i <= 5; i++) {
       let tag = (
         <div key={`color_${i}`} 
           className="color-preview"
-          style={{background: `#${palette[`color_${i}`]}`}} />
+          style={{background: `#${palette[`color_${i}`]}`}} 
+        />
       )
 
       divColors.push(tag)
@@ -94,7 +55,7 @@ class ControlForm extends Component {
     return (
       <section className="ControlForm">
         <form className="project">
-          <input type="test" placeholder="Project Title" />
+          <input type="test" placeholder="Project Title" value={this.props.project.name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
             <button className="project-delete">Delete</button>
@@ -109,4 +70,9 @@ class ControlForm extends Component {
   }
 }
 
-export default ControlForm;
+const mapStateToProps = (state) => ({
+  project: state.project,
+  palettes: state.palettes
+})
+
+export default connect(mapStateToProps)(ControlForm);
