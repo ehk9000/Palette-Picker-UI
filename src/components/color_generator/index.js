@@ -105,7 +105,7 @@ class ColorGenerator extends Component {
             </button>
           </div>
         </section>
-        <div className="colorField">{colorFields}</div>
+        <div className="colorField-container">{colorFields}</div>
       </form>
     );
   }

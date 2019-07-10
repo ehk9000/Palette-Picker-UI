@@ -13,7 +13,7 @@
 }
 
 .palette-controls {
-  width: 270px;
+  width: 290px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -44,7 +44,7 @@
   border-radius: 40px;
 }
 
-.colorField {
+.colorField-container {
   box-sizing: border-box;
   position: relative;
   padding: 10px;
@@ -52,7 +52,6 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  // align-items: center;
 
   i {
     text-shadow: white .8px .8px 1px;
@@ -65,8 +64,26 @@
   }
 }
 
+.color-field {
+  border: none;
+  box-sizing: border-box;
+
+  input {
+    border: none;
+    height: 35px;
+    padding: 0 15px;
+  }
+}
+
 .color-display {
   content: '';
-  height: 20px;
-  width: 60px;
+  position: relative;
+  height: 200px;
+  width: 100%;
+
+  i {
+    position: absolute;
+    bottom: 10px;
+    left: 45%;
+  }
 }
