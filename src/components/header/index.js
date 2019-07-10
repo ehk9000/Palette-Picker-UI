@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DropDown from '../drop_down';
 
-class Header extends Component {
+export class Header extends Component {
   constructor() {
     super()
     this.state = {

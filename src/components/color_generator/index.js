@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class ColorGenerator extends Component {
+
+export class ColorGenerator extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       palette_name: this.props.currentPalette.name|| '',
       colors: this.bringInColors() || [{}, {}, {}, {}, {}]

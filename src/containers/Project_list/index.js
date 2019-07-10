@@ -4,13 +4,15 @@ import Project from '../../components/Project/index';
 import { fetchAddProject } from '../../thunks/fetchAddProject';
 import './Project_list.scss';
 
-class Project_list extends Component {
+
+export class Project_list extends Component {
   constructor() {
     super()
     this.state = {
       name: ""
     }
   }
+
 
   assignProjects = () => {
    let { projects } = this.props;

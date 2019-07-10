@@ -18,7 +18,6 @@ const router = (
       <App />
     </BrowserRouter>
   </Provider>
-
 )
 
 

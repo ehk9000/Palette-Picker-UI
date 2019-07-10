@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const DropDown = () => {
+export const DropDown = () => {
   return (
     <section className="DropDown">
       <NavLink to="/">Create Project</NavLink>

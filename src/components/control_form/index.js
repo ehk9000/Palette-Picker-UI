@@ -3,7 +3,7 @@ import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
 
-class ControlForm extends Component {
+export class ControlForm extends Component {
   constructor() {
     super()
     this.state = {
