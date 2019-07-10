@@ -1,3 +1,8 @@
+export const selectProject = (project) => ({
+  type: 'SELECT_PROJECT',
+  project
+})
+
 export const addAllProjects = (projects) => ({
   type: 'ADD_ALL_PROJECTS',
   projects
