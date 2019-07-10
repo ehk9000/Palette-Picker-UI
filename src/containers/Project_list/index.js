@@ -4,7 +4,7 @@ import Project from '../../components/Project/index';
 import './Project_list.scss';
 
 
-class Project_list extends Component {
+export class Project_list extends Component {
   assignProjects = () => {
    let { projects } = this.props;
    let displayProjects;
