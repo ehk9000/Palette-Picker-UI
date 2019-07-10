@@ -27,7 +27,7 @@ class ControlForm extends Component {
     return this.state.project_palettes.map(pal => {
       console.log('pal', pal)
       return (
-        <article key={pal.id} onClick={(pal) => this.props.selectCurrentPalette(pal)} className="palette-item">
+        <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
           <div className="colors-preview">
             {this.displayColors(pal)}
