@@ -78,23 +78,34 @@ export class ColorGenerator extends Component {
 
     return (
       <form className="ColorGenerator">
-        <input
-          name="palette_name"
-          onChange={e => this.handleName(e)}
-          value={palette_name}
-          className="palette-name"
-          type="text"
-          placeholder="Palette Name"
-          maxLength="10"
-        />
-        {colorFields}
-        <fieldset className="palette-controls">
-          <input className="palette-save" type="submit" value="SAVE" />
-          <button className="palette-delete">Delete</button>
+        <section className="palette-head">
+          <input
+            name="palette_name"
+            onChange={e => this.handleName(e)}
+            value={palette_name}
+            className="palette-name"
+            type="text"
+            placeholder="Palette Name"
+            maxLength="10"
+          />
           <span>
-            <button className="palette-shuffle">Shuffle</button>
+            <button className="palette-shuffle">
+              Shuffle Colors
+              <i className="fas fa-dice" />
+            </button>
           </span>
-        </fieldset>
+          <div className="palette-controls">
+            <button className="palette-save">
+              Save Palette
+              <i className="fas fa-save" />
+            </button>
+            <button className="palette-delete">
+              Delete Palette
+              <i className="far fa-trash-alt" />
+            </button>
+          </div>
+        </section>
+        <div className="colorField-container">{colorFields}</div>
       </form>
     );
   }

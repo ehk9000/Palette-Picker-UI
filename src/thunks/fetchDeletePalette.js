@@ -3,11 +3,10 @@ import { setLoading, setError, deletePalette } from '../actions';
 export const fetchDeletePalette = (id) => {
   return async (dispatch) => {
     const options = {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json' }
+      method: 'DELETE'
     }
 
-    const url = `http://localhost:3001/api/v1/palettes/${id}`
+    const url = `http://localhost:3000/api/v1/palettes/${id}`
 
     try {
       dispatch(setLoading(true))

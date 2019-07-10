@@ -1,15 +1,22 @@
 import React from 'react';
-import './Project.scss';
+import { connect } from 'react-redux';
+import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
 
-const Project = ({name}) => {
+const Project = (props) => {
+  const {name, id} = props;
+  
   return(
     <section className="title-wrapper">
-      <h3 className="project-title">{name} </h3>  
+      <h3 className="project-title">{name}</h3>  
       
       <p className="click-bait">Click to edit project</p>
-      <i className="far fa-trash-alt delete-btn"></i>
+      <i className="far fa-trash-alt delete-btn" onClick={() => props.deleteProject(id)}></i>
     </section>
   )
 }
 
-export default Project;
+const mapDispatchToProps = dispatch => ({
+  deleteProject: (id) => dispatch(fetchDeleteProject(id))
+})
+
+export default connect(null, mapDispatchToProps)(Project);

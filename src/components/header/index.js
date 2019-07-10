@@ -22,8 +22,9 @@ export class Header extends Component {
     return (
       <header>
         <h1>Color-Me-Newton</h1>
-        <div className="drop_down-toggle">
-          <i className={`fas ${icon}`} onClick={this.handleToggle}/>
+        <div className="drop_down-toggle" onClick={this.handleToggle}>
+          <h3>MENU</h3>
+          <i className={`fas ${icon}`} />
           {this.state.toggle && <DropDown />}
         </div>
       </header>
