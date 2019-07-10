@@ -1,8 +1,8 @@
-import { addAllProjects, setLoading, setError } from '../actions/index';
+import { addAllPalettes, setLoading, setError } from '../actions/index';
 
-export const fetchAllProjects = () => {
+export const fetchAllPalettes = () => {
   return async (dispatch) => {
-    const url = 'http://localhost:3000/api/v1/projects';
+    const url = 'http://localhost:3000/api/v1/palettes';
 
     try {
       dispatch(setLoading(true));
@@ -13,12 +13,11 @@ export const fetchAllProjects = () => {
         throw Error(response.statusText);
       }
 
-      const projects = await response.json();
-
+      const palettes = await response.json();
 
       dispatch(setLoading(false));
-      dispatch(addAllProjects(projects));
-    } catch(error) {
+      dispatch(addAllPalettes(palettes));
+    } catch (error) {
       dispatch(setError(error.message))
     }
   }
