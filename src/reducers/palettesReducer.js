@@ -17,7 +17,7 @@ export const palettesReducer = (state = [], action) => {
 
       return newState;
 
-    case 'DELETE_PROJECT':
+    case 'DELETE_PALETTE':
       const filteredState = state.filter(palette => {
         return palette.id !== action.id
       })
