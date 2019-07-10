@@ -2,23 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class ColorGenerator extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      palette_name: '',
-      colors: [{}, {}, {}, {}, {}]
+      palette_name: this.props.currentPalette.name|| '',
+      colors: this.bringInColors() || [{}, {}, {}, {}, {}]
     }
   }
 
   componentDidMount() {
-    const {currentPalette} = this.props;
-    let palette_name = currentPalette.name;
-    let colors = [
-      currentPalette.color_1, currentPalette.color_2, currentPalette.color_3, currentPalette.color_4, currentPalette.color_5
-    ]
-
-    this.setState({palette_name, colors})
     this.generateColors()
+  }
+
+  bringInColors = () => {
+    let colors = [];
+    for (let i = 1; i <= 5; i++) {
+      let {currentPalette} = this.props;
+      let currColor = {
+        hex: currentPalette[`color_${i}`],
+        locked: false
+      };
+      colors.push({currColor})
+    }
+    console.log('bIC: colors', colors);
+    this.setState({colors})
   }
 
   generateColors = () => {
@@ -58,9 +65,11 @@ class ColorGenerator extends Component {
   }
 
   render() {
+    console.log("CurrPal", this.props.currentPalette);
+    const currPalette = this.props.currentPalette;
     const {palette_name, colors} = this.state;
-    console.log(colors[0].id)
-    const colorFields = colors[0].id && colors.map((colorObj, index) => {
+    // console.log(colors[0].id)
+    const colorFields = colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
       const i = index + 1;
       return (
@@ -75,7 +84,7 @@ class ColorGenerator extends Component {
           <input
             name={`color${i}`}
             onChange={(e) => this.updateColor(e)}
-            value={this.state.colors[index].hex}
+            value={currPalette[`color_${i}`] || this.state.colors[index].hex}
             className="palette-color"
             type="text"
             maxLength="6"
@@ -90,7 +99,7 @@ class ColorGenerator extends Component {
           <input
             name="palette_name"
             onChange={e => this.handleName(e)}
-            value={palette_name}
+            value={currPalette.name || palette_name}
             className="palette-name"
             type="text"
             placeholder="Palette Name"
@@ -125,4 +134,4 @@ const mapStateToProps = (state) => ({
   palettes: state.palettes
 })
 
-export default connect(mapStateToProps)(ColorGenerator);
+export default connect(mapStateToProps, null)(ColorGenerator);

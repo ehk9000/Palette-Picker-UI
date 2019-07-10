@@ -8,7 +8,6 @@ class ControlForm extends Component {
     super()
     this.state = {
       project_name: '',
-      currentPalette: {id: null, colors: [{}]},
       project_palettes: []
     }
   }
