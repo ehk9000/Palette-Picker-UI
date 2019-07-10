@@ -36,9 +36,10 @@ class App extends Component {
     return (
     <div className="App">
       <Header />
-      <Route exact path="/" component={Control_form} />
-      <Route path="/projects" component={Project_list} />
-
+      <main>
+        <Route exact path="/" component={ControlForm} />
+        <Route path="/projects" component={Project_list} />
+      </main>
     </div>
   );
 

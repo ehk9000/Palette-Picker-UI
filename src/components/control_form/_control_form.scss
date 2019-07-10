@@ -1,9 +1,3 @@
-
-.color-display {
-  content: '';
-  height: 20px;
-  width: 60px;
-
 .ControlForm {
   height: 100%;
   background: white;
@@ -50,10 +44,6 @@
   }
 }
 
-.ColorGenerator {
-  background: slategray;
-}
-
 .palettes {
   padding: 20px;
   display: flex;
@@ -68,10 +58,17 @@
   justify-content: space-between;
   height: 50px;
   width: 270px;
-  border: slateblue 2px ridge;
+  border: lavender 2px ridge;
+  box-shadow: 3px 3px 2px lavender;
   border-radius: 40px;
   padding: 0 15px;
   margin: 10px auto;
+
+  &:hover {
+    cursor: pointer;
+    color: $inputColor-hover;
+    box-shadow: $shadow-box;
+  }
 }
 
 .colors-preview {
