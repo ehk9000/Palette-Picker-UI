@@ -1,3 +1,21 @@
+export const selectCurrentPalette = (palette) => ({
+  type: 'SELECT_CURRENT_PALETTE',
+  palette
+})
+
+export const clearCurrentPalette = () => ({
+  type: 'CLEAR_CURRENT_PALETTE'
+})
+
+export const selectCurrentProject = (project) => ({
+  type: 'SELECT_CURRENT_PROJECT',
+  project
+})
+
+export const clearCurrentProject = () => ({
+  type: 'CLEAR_CURRENT_PROJECT'
+})
+
 export const addAllProjects = (projects) => ({
   type: 'ADD_ALL_PROJECTS',
   projects

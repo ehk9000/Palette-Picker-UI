@@ -1,70 +1,32 @@
 import React, {Component} from 'react';
 import ColorGenerator from '../color_generator';
-
-const samplePalettes = [
-  {
-    name: "palette_1",
-    color_1: "69619C",
-    color_2: "67615C",
-    color_3: "19e19C",
-    color_4: "11619C",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_2",
-    color_1: "F2D1C9",
-    color_2: "8332AC",
-    color_3: "E086D3",
-    color_4: "6290C8",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_1",
-    color_1: "69619C",
-    color_2: "67615C",
-    color_3: "19e19C",
-    color_4: "11619C",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_2",
-    color_1: "F2D1C9",
-    color_2: "8332AC",
-    color_3: "E086D3",
-    color_4: "6290C8",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_2",
-    color_1: "F2D1C9",
-    color_2: "8332AC",
-    color_3: "E086D3",
-    color_4: "6290C8",
-    color_5: "69214e"
-  },
-  {
-    name: "palette_1",
-    color_1: "69619C",
-    color_2: "67615C",
-    color_3: "19e19C",
-    color_4: "11619C",
-    color_5: "69214e"
-  }
-]
+import { connect } from 'react-redux';
+import { selectCurrentPalette } from '../../actions';
 
 class ControlForm extends Component {
   constructor() {
     super()
     this.state = {
       project_name: '',
-      palettes: samplePalettes
+      project_palettes: []
+    }
+  }
+
+  componentDidMount() {
+    let { palettes, currentProject } = this.props
+    if (palettes.length && currentProject.id) {
+      palettes = palettes.filter(palette => {
+        return palette.project_id === currentProject.id;
+      })
+      if (palettes) this.setState({ project_name: currentProject.name, project_palettes: palettes })
     }
   }
 
   mapPalettes = () => {
-    return this.state.palettes.map(pal => {
+    return this.state.project_palettes.map(pal => {
+      console.log('pal', pal)
       return (
-        <article className="palette-item">
+        <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
           <div className="colors-preview">
             {this.displayColors(pal)}
@@ -75,13 +37,14 @@ class ControlForm extends Component {
   }
 
   displayColors = (palette) => {
-    let divColors= [];
+    let divColors = [];
     
     for (let i = 1; i <= 5; i++) {
       let tag = (
         <div key={`color_${i}`} 
           className="color-preview"
-          style={{background: `#${palette[`color_${i}`]}`}} />
+          style={{background: `#${palette[`color_${i}`]}`}} 
+        />
       )
 
       divColors.push(tag)
@@ -90,11 +53,16 @@ class ControlForm extends Component {
     return divColors;
   }
 
+  handleChange(e) {
+    const {name, value} = e.target
+    this.setState({[name]: value})
+  }
+
   render() {
     return (
       <section className="ControlForm">
         <form className="project">
-          <input type="test" placeholder="Project Title" />
+          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
             <button className="project-delete">Delete</button>
@@ -102,11 +70,20 @@ class ControlForm extends Component {
         </form>
         <ColorGenerator />
         <section className="palettes">
-          {this.state.palettes.length > 0 && this.mapPalettes()}
+          {this.state.project_palettes.length > 0 && this.mapPalettes()}
         </section>
       </section>
     );
   }
 }
 
-export default ControlForm;
+const mapStateToProps = (state) => ({
+  currentProject: state.currentProject,
+  palettes: state.palettes
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ControlForm);
