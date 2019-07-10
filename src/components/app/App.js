@@ -3,8 +3,8 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchAllProjects } from '../../thunks/fetchAllProjects';
 import  Project_list from '../../containers/Project_list';
+import ControlForm from '../control_form/index';
 import Header from '../header';
-import ControlForm  from '../control_form';
 
 class App extends Component {
   constructor() {
@@ -36,7 +36,7 @@ class App extends Component {
     return (
     <div className="App">
       <Header />
-      <Route exact path="/" component={Control_form} />
+      <Route exact path="/" component={ControlForm} />
       <Route path="/projects" component={Project_list} />
 
     </div>
