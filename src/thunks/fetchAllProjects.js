@@ -2,7 +2,7 @@ import { addAllProjects, setLoading, setError } from '../actions/index';
 
 export const fetchAllProjects = () => {
   return async (dispatch) => {
-    const url = 'http://localhost:3000/api/v1/projects';
+    const url = 'http://localhost:3001/api/v1/projects';
 
     try {
       dispatch(setLoading(true));
