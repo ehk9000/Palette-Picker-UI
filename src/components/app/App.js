@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchAllProjects } from '../../thunks/fetchAllProjects';
+import { fetchAllPalettes } from '../../thunks/fetchAllPalettes';
 import  Project_list from '../../containers/Project_list';
 import ControlForm from '../control_form/index';
 import Header from '../header';
@@ -17,7 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchAllProjects()
-    this.getPalettes()
+    this.props.fetchAllPalettes()
   } 
 
   getProjects = async () => {
@@ -52,7 +53,8 @@ const mapStateToProps = ({projects, palettes}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllProjects: () => dispatch(fetchAllProjects()) 
+  fetchAllProjects: () => dispatch(fetchAllProjects()),
+  fetchAllPalettes: () => dispatch(fetchAllPalettes()) 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
