@@ -21,17 +21,17 @@ class App extends Component {
     this.props.fetchAllPalettes()
   } 
 
-  getProjects = async () => {
-    const response = await fetch('http://localhost:3000/api/v1/projects');
-    const projects = await response.json();
-    this.setState({projects});
-  }
+  // getProjects = async () => {
+  //   const response = await fetch('http://localhost:3000/api/v1/projects');
+  //   const projects = await response.json();
+  //   this.setState({projects});
+  // }
 
-  getPalettes = async () => {
-    const response = await fetch('http://localhost:3000/api/v1/palettes');
-    const palettes = await response.json();
-    this.setState({palettes});
-  } 
+  // getPalettes = async () => {
+  //   const response = await fetch('http://localhost:3000/api/v1/palettes');
+  //   const palettes = await response.json();
+  //   this.setState({palettes});
+  // } 
 
   render() {
     return (
