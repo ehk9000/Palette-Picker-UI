@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDeletePalette } from '../../thunks/fetchDeletePalette';
 import { fetchAddPalette } from '../../thunks/fetchAddPalette';
+import { fetchPutPalette } from '../../thunks/fetchPutPalette';
 
 export class ColorGenerator extends Component {
   constructor(props) {
@@ -20,10 +21,26 @@ export class ColorGenerator extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {currentPalette} = this.props;
+
+    // If currentPalette changes to empty,
+    // Then Clear inputs, and generate all random colors
+    const shouldClearFields =
+      prevProps.currentPalette.id && !currentPalette.id;
+    if(shouldClearFields) {
+      let colors = [
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false}
+      ]
+      this.setState({palette_name: '', colors})
+    }
+
     const currentPaletteHasChanged = currentPalette.id && prevProps.currentPalette.id !== currentPalette.id
     if(currentPaletteHasChanged) {
       let colors = prevState.colors.map((color, i) => {
-        return {hex: currentPalette[`color_${i+1}`], locked: color.locked};
+        return {hex: currentPalette[`color_${i+1}`], locked: false};
       })
       this.setState({colors, palette_name: currentPalette.name});
     }
@@ -98,8 +115,33 @@ export class ColorGenerator extends Component {
     this.props.addPalette(newPalette)
   }
 
-  render() {
+  togglePaletteThunk = (e) => {
+    e.preventDefault()
+    const {addPalette, updatePalette, currentProject, currentPalette} = this.props;
+    const {palette_name, colors} = this.state;
+    const newPalette = {
+      color_1: colors[0].hex,
+      color_2: colors[1].hex,
+      color_3: colors[2].hex,
+      color_4: colors[3].hex,
+      color_5: colors[4].hex,
+      name: palette_name,
+      project_id: currentProject.id
+    }
+    if (currentPalette.id) {
+      newPalette.id = currentPalette.id;
+      return updatePalette(newPalette)
+    } else {
+      return addPalette(newPalette)
+    }
+  }
+
+  togglePaletteSaveText = () => {
     const {currentPalette} = this.props;
+    return currentPalette.id ? 'Update' : 'Save';
+  }
+
+  render() {
     const {palette_name, colors} = this.state;
     const colorFields = colors[0].hex && colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
@@ -145,8 +187,8 @@ export class ColorGenerator extends Component {
             </button>
           </span>
           <div className="palette-controls">
-            <button className="palette-save" onClick={this.handleSavePalette}>
-              Save Palette
+            <button className="palette-save" onClick={(e) => this.togglePaletteThunk(e)}>
+              {this.togglePaletteSaveText()} Palette
               <i className="fas fa-save" />
             </button>
             <button className="palette-delete" onClick={(e) => this.handleDelete(e)}>
@@ -169,7 +211,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deletePalette: (id) => dispatch(fetchDeletePalette(id)),
-  addPalette: (palette) => dispatch(fetchAddPalette(palette))
+  addPalette: (palette) => dispatch(fetchAddPalette(palette)),
+  updatePalette: (palette) => dispatch(fetchPutPalette(palette))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ColorGenerator);
