@@ -36,6 +36,12 @@ export class ColorGenerator extends Component {
     this.setState({colors});
   }
 
+  handleShuffle = (e) => {
+    e.preventDefault()
+    this.generateColors()
+
+  }
+
   generateHex = () => {
     const characters = "0123456789ABCDEF";
     let hex = '';
@@ -105,7 +111,7 @@ export class ColorGenerator extends Component {
             maxLength="10"
           />
           <span>
-            <button className="palette-shuffle">
+            <button className="palette-shuffle" onClick={e => this.handleShuffle(e)}>
               Shuffle Colors
               <i className="fas fa-dice" />
             </button>
