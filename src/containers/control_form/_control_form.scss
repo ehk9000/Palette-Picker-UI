@@ -64,6 +64,11 @@
   padding: 0 15px;
   margin: 10px auto;
 
+  &[active="true"] {
+    color: $inputColor-hover;
+    box-shadow: $shadow-box;
+  }
+
   &:hover {
     cursor: pointer;
     color: $inputColor-hover;

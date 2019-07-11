@@ -48,7 +48,6 @@ export class ControlForm extends Component {
   }
 
   filterPalettesByProject = (palettes, project_id) => {
-    console.log('id', project_id)
     if (palettes.length && project_id) {
       return palettes.filter(palette => {
         return palette.project_id === project_id;
@@ -57,9 +56,10 @@ export class ControlForm extends Component {
   }
 
   mapPalettes = (palettes) => {
+    const { currentPalette } = this.props;
     return palettes.map(pal => {
       return (
-        <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
+        <article key={pal.id} active={(currentPalette.id === pal.id).toString()} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
           <div className="colors-preview">
             {this.displayColors(pal)}
@@ -108,7 +108,7 @@ export class ControlForm extends Component {
   }
 
   render() {
-    const { deleteProject, currentProject, palettes } = this.props;
+    const { currentProject, palettes } = this.props;
     const matchingPalettes = currentProject.id && palettes.length && this.mapPalettes(this.filterPalettesByProject(palettes, currentProject.id))
     return (
       <section className="ControlForm">
@@ -130,6 +130,7 @@ export class ControlForm extends Component {
 
 const mapStateToProps = (state) => ({
   currentProject: state.currentProject,
+  currentPalette: state.currentPalette,
   palettes: state.palettes
 });
 

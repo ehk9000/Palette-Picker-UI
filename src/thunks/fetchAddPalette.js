@@ -1,4 +1,4 @@
-import { addPalette, setLoading, setError } from '../actions';
+import { addPalette, selectCurrentPalette, setLoading, setError } from '../actions';
 
 export const fetchAddPalette = (palette) => {
   return async (dispatch) => {
@@ -21,8 +21,9 @@ export const fetchAddPalette = (palette) => {
 
       const palette = await response.json();
 
-      dispatch(setLoading(false));
       dispatch(addPalette(palette));
+      dispatch(selectCurrentPalette(palette))
+      dispatch(setLoading(false));
     } catch(error) {
       dispatch(setError(error.message));
     }
