@@ -27,6 +27,7 @@ export class App extends Component {
       <Header />
       <main>
         <Route exact path="/" component={ControlForm} />
+        <Route exact path="/createNewProject" component={ControlForm} />
         <Route path="/projects" component={Project_list} />
       </main>
     </div>
