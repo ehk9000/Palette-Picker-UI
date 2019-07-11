@@ -20,13 +20,12 @@ export class ColorGenerator extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {currentPalette} = this.props;
-    const currentPaletteHasChanged = prevProps.currentPalette.id !== currentPalette.id
-    console.log('changed', currentPaletteHasChanged)
+    const currentPaletteHasChanged = currentPalette.id && prevProps.currentPalette.id !== currentPalette.id
     if(currentPaletteHasChanged) {
       let colors = prevState.colors.map((color, i) => {
         return {hex: currentPalette[`color_${i+1}`], locked: color.locked};
       })
-      this.setState({colors});
+      this.setState({colors, palette_name: currentPalette.name});
     }
   }
 
@@ -39,7 +38,6 @@ export class ColorGenerator extends Component {
         return {hex: this.generateHex(), locked};
       }
     })
-    console.log('Generate colors', colors)
     this.setState({colors});
   }
 
@@ -79,7 +77,6 @@ export class ColorGenerator extends Component {
   }
 
   handleShuffleClick = (e) => {
-    console.log('Shuffle!')
     e.preventDefault()
     const {colors} = this.state;
     this.generateColors(colors)
@@ -104,7 +101,7 @@ export class ColorGenerator extends Component {
   render() {
     const {currentPalette} = this.props;
     const {palette_name, colors} = this.state;
-    const colorFields = colors.map((colorObj, index) => {
+    const colorFields = colors[0].hex && colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
       const i = index + 1;
       const hex = colors[index].hex;
@@ -135,7 +132,7 @@ export class ColorGenerator extends Component {
           <input
             name="palette_name"
             onChange={this.handleName}
-            value={currentPalette.name || palette_name}
+            value={palette_name}
             className="palette-name"
             type="text"
             placeholder="Palette Name"
