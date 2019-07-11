@@ -14,26 +14,32 @@ export class ColorGenerator extends Component {
   }
 
   componentDidMount() {
-    this.generateColors()
+    const {colors} = this.state; 
+    this.generateColors(colors)
   }
 
-  bringInColors = () => {
+  componentDidUpdate(prevProps, prevState) {
     const {currentPalette} = this.props;
-    let colors = [];
-    for (let i = 1; i <= 5; i++) {
-      let currColor = {
-        hex: currentPalette[`color_${i}`],
-        locked: false
-      };
-      colors.push(currColor)
+    const currentPaletteHasChanged = prevProps.currentPalette.id !== currentPalette.id
+    console.log('changed', currentPaletteHasChanged)
+    if(currentPaletteHasChanged) {
+      let colors = prevState.colors.map((color, i) => {
+        return {hex: currentPalette[`color_${i+1}`], locked: color.locked};
+      })
+      this.setState({colors});
     }
-    this.setState({colors})
   }
 
-  generateColors = () => {
-    const colors = this.state.colors.map(color => {
-      return {hex: this.generateHex(), locked: false};
+  generateColors = (colors) => {
+    colors = colors.map((color, i) => {
+      const {locked} = color;
+      if (locked) {
+        return color;
+      } else {
+        return {hex: this.generateHex(), locked};
+      }
     })
+    console.log('Generate colors', colors)
     this.setState({colors});
   }
 
@@ -73,8 +79,10 @@ export class ColorGenerator extends Component {
   }
 
   handleShuffleClick = (e) => {
+    console.log('Shuffle!')
     e.preventDefault()
-    this.generateColors()
+    const {colors} = this.state;
+    this.generateColors(colors)
   }
 
   handleSavePalette = (e) => {
@@ -99,11 +107,12 @@ export class ColorGenerator extends Component {
     const colorFields = colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
       const i = index + 1;
+      const hex = colors[index].hex;
       return (
         <fieldset key={index} data-key={index} className="color-field">
           <div id={`box${i}`}
             className="color-display" 
-            style={{background: `#${colorObj.hex}`}}>
+            style={{background: `#${hex}`}}>
             <i id={`color${i}`}
               className={`fas fa-${lockType}`}
               onClick={(e) => this.handleLock(e)} />
@@ -111,7 +120,7 @@ export class ColorGenerator extends Component {
           <input
             name={`color${i}`}
             onChange={(e) => this.updateColor(e)}
-            value={currentPalette[`color_${i}`] || this.state.colors[index].hex}
+            value={hex}
             className="palette-color"
             type="text"
             maxLength="6"
