@@ -56,6 +56,12 @@ export class ControlForm extends Component {
     this.setState({[name]: value})
   }
 
+  handleDelete(e) {
+    const { deleteProject, currentProject } = this.props;
+    e.preventDefault();
+    deleteProject(currentProject.id)
+  }
+
   render() {
     const { deleteProject, currentProject } = this.props;
     return (
@@ -64,7 +70,7 @@ export class ControlForm extends Component {
           <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.props.currentProject.name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
-            <button className="project-delete" onClick={() => deleteProject(currentProject.id)}>Delete</button>
+            <button className="project-delete" onClick={(e) => this.handleDelete(e)}>Delete</button>
           </div>
         </form>
         <ColorGenerator />

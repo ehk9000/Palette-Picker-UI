@@ -15,20 +15,11 @@ export class Project_list extends Component {
 
 
   assignProjects = () => {
-   let { projects } = this.props;
-   let displayProjects;
-   
-   if (projects && projects.length) {
-     displayProjects = projects.map(project => 
-       <Project {...project} key={project.id} />
-     );
-   } else {
-     displayProjects = <div>
-       <p>Projects will display here</p>
-     </div>
-   }
-   return displayProjects;
- }
+    let { projects } = this.props;
+    projects = projects.map(project => <Project {...project} key={project.id} />)
+    const noProjectsMessage = <div><p>Projects will display here</p></div>
+    return projects.length ? projects : noProjectsMessage;
+  }
 
   handleChange = (e) => {
     const name = e.target.value;
