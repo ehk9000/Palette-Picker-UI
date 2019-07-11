@@ -5,21 +5,43 @@ import { selectCurrentPalette } from '../../actions';
 import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
 
 export class ControlForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      project_name: '',
+      project_name: this.setName(),
       project_palettes: []
     }
   }
 
   componentDidMount() {
-    let { palettes, currentProject } = this.props
+    let { palettes, currentProject } = this.props;
     if (palettes.length && currentProject.id) {
       palettes = palettes.filter(palette => {
         return palette.project_id === currentProject.id;
-      })
-      if (palettes) this.setState({ project_name: currentProject.name, project_palettes: palettes })
+      });
+      if (palettes)
+        this.setState({
+          project_name: currentProject.name,
+          project_palettes: palettes
+        });
+    }
+  }
+
+  setName = () => {
+    return this.props.currentProject.name;
+  }
+
+  loadProject = () => {
+    let { palettes, currentProject } = this.props;
+    if (palettes.length && currentProject.id) {
+      palettes = palettes.filter(palette => {
+        return palette.project_id === currentProject.id;
+      });
+      if (palettes)
+        this.setState({
+          project_name: currentProject.name,
+          project_palettes: palettes
+        });
     }
   }
 
@@ -65,10 +87,14 @@ export class ControlForm extends Component {
     this.setState({[name]: value})
   }
 
-  handleDelete(e) {
-    const { deleteProject, currentProject } = this.props;
+  handleDelete = (e) => {
     e.preventDefault();
+    const { deleteProject, currentProject } = this.props;
     deleteProject(currentProject.id)
+  }
+
+  toggleProjectSave = () => {
+    return this.props.currentProject.name ? 'Update' : 'Save';
   }
 
   render() {
@@ -77,10 +103,10 @@ export class ControlForm extends Component {
     return (
       <section className="ControlForm">
         <form className="project">
-          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name || this.props.currentProject.name} />
+          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name || currentProject.name} />
           <div className="project-controls">
-            <button className="project-save">Save</button>
-            <button className="project-delete" onClick={(e) => this.handleDelete(e)}>Delete</button>
+            <button className="project-save">{this.toggleProjectSave()}</button>
+            <button className="project-delete" onClick={this.handleDelete}>Delete</button>
           </div>
         </form>
         <ColorGenerator />
