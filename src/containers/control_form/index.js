@@ -3,7 +3,6 @@ import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
 import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
-import { fetchAddPalette } from '../../thunks/fetchAddPalette';
 import { fetchAddProject } from '../../thunks/fetchAddProject';
 import { fetchPutProject } from '../../thunks/fetchPutProject';
 
