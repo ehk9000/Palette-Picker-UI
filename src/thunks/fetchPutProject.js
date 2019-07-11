@@ -1,11 +1,11 @@
-import { addProject, selectCurrentProject, setLoading, setError } from '../actions';
+import { updateProject, selectCurrentProject, setLoading, setError } from '../actions';
 
-export const fetchAddProject = (project) => {
+export const fetchPutProject = (project) => {
   return async (dispatch) => {
-    const url = 'http://localhost:3000/api/v1/projects';
+    const url = `http://localhost:3000/api/v1/palettes/${project.id}`;
     const body = JSON.stringify(project)
     const options = {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-type': 'application/json' },
       body
     }
@@ -20,9 +20,10 @@ export const fetchAddProject = (project) => {
       }
 
       const project = await response.json();
+      console.log(project)
+      dispatch(selectCurrentProject(project))
       dispatch(setLoading(false));
-      dispatch(addProject(project));
-      dispatch(selectCurrentProject(project));
+      dispatch(updateProject(project));
     } catch(error) {
       dispatch(setError(error.message));
     }

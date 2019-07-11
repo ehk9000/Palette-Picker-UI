@@ -3,6 +3,9 @@ import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
 import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
+import { fetchAddPalette } from '../../thunks/fetchAddPalette';
+import { fetchAddProject } from '../../thunks/fetchAddProject';
+import { fetchPutProject } from '../../thunks/fetchPutProject';
 
 export class ControlForm extends Component {
   constructor(props) {
@@ -93,8 +96,16 @@ export class ControlForm extends Component {
     deleteProject(currentProject.id)
   }
 
+  toggleProjectThunk = (e) => {
+    e.preventDefault()
+    const {addProject, updateProject, currentProject} = this.props;
+    const {project_name} = this.state;
+    return currentProject.id ? updateProject(currentProject) : addProject({name: project_name});
+  }
+
   toggleProjectSave = () => {
-    return this.props.currentProject.name ? 'Update' : 'Save';
+    const {currentProject} = this.props;
+    return currentProject.name ? 'Update' : 'Save';
   }
 
   render() {
@@ -105,7 +116,7 @@ export class ControlForm extends Component {
         <form className="project">
           <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name || currentProject.name} />
           <div className="project-controls">
-            <button className="project-save">{this.toggleProjectSave()}</button>
+            <button className="project-save" onClick={(e) => this.toggleProjectThunk(e)}>{this.toggleProjectSave()}</button>
             <button className="project-delete" onClick={this.handleDelete}>Delete</button>
           </div>
         </form>
@@ -125,6 +136,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette)),
+  addProject: (project) => dispatch(fetchAddProject(project)),
+  updateProject: (project) => dispatch(fetchPutProject(project)),
   deleteProject: (id) => dispatch(fetchDeleteProject(id))
 });
 
