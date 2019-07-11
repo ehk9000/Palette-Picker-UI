@@ -71,6 +71,11 @@ export class ColorGenerator extends Component {
     deletePalette(currentPalette.id)
   }
 
+  handleShuffleClick = (e) => {
+    e.preventDefault();
+    this.generateColors()
+  }
+
   render() {
     const {currentPalette} = this.props;
     const {palette_name, colors} = this.state;
@@ -111,7 +116,7 @@ export class ColorGenerator extends Component {
             maxLength="10"
           />
           <span>
-            <button className="palette-shuffle">
+            <button onClick={this.handleShuffleClick} className="palette-shuffle">
               Shuffle Colors
               <i className="fas fa-dice" />
             </button>
