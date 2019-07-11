@@ -21,10 +21,26 @@ export class ColorGenerator extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {currentPalette} = this.props;
+
+    // If currentPalette changes to empty,
+    // Then Clear inputs, and generate all random colors
+    const shouldClearFields =
+      prevProps.currentPalette.id && !currentPalette.id;
+    if(shouldClearFields) {
+      let colors = [
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false},
+        {hex: this.generateHex(), locked:false}
+      ]
+      this.setState({palette_name: '', colors})
+    }
+
     const currentPaletteHasChanged = currentPalette.id && prevProps.currentPalette.id !== currentPalette.id
     if(currentPaletteHasChanged) {
       let colors = prevState.colors.map((color, i) => {
-        return {hex: currentPalette[`color_${i+1}`], locked: color.locked};
+        return {hex: currentPalette[`color_${i+1}`], locked: false};
       })
       this.setState({colors, palette_name: currentPalette.name});
     }
