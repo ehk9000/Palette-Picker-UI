@@ -1,4 +1,4 @@
-import { setLoading, setError, deletePalette } from '../actions';
+import { setLoading, setError, deletePalette, clearCurrentPalette } from '../actions';
 
 export const fetchDeletePalette = (id) => {
   return async (dispatch) => {
@@ -18,6 +18,7 @@ export const fetchDeletePalette = (id) => {
       }
 
       dispatch(deletePalette(id));
+      dispatch(clearCurrentPalette())
       dispatch(setLoading(false));
     } catch(error) {
       dispatch(setError(error.message))
