@@ -2,7 +2,8 @@ import { addProject, selectCurrentProject, setLoading, setError } from '../actio
 
 export const fetchAddProject = (project) => {
   return async (dispatch) => {
-    const url = 'http://localhost:3000/api/v1/projects';
+    const base = `https://color-me-newton-api.herokuapp.com`;
+    const url = `${base}/api/v1/projects`;
     const body = JSON.stringify(project)
     const options = {
       method: 'POST',

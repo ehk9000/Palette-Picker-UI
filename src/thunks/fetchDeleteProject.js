@@ -6,7 +6,8 @@ export const fetchDeleteProject = (id) => {
       method: 'DELETE'
     }
 
-    const url = `http://localhost:3000/api/v1/projects/${id}`;
+    const base = "https://color-me-newton-api.herokuapp.com";
+    const url = `${base}/api/v1/projects/${id}`;
     
     try {
       dispatch(setLoading(true))
