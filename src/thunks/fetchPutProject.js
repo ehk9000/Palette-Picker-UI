@@ -3,7 +3,7 @@ import { updateProject, selectCurrentProject, setLoading, setError } from '../ac
 export const fetchPutProject = (project) => {
   return async (dispatch) => {
     const base = "https://color-me-newton-api.herokuapp.com";
-    const url = `${base}/api/v1/palettes/${project.id}`;
+    const url = `${base}/api/v1/projects/${project.id}`;
     const body = JSON.stringify(project)
     const options = {
       method: 'PUT',
@@ -21,7 +21,6 @@ export const fetchPutProject = (project) => {
       }
 
       const project = await response.json();
-      console.log(project)
       dispatch(selectCurrentProject(project))
       dispatch(setLoading(false));
       dispatch(updateProject(project));
