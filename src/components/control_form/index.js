@@ -23,17 +23,17 @@ export class ControlForm extends Component {
     }
   }
 
-  filterPalettesByProject = () => {
-    let { palettes, currentProject } = this.props
-    if (palettes.length && currentProject.id) {
+  filterPalettesByProject = (palettes, project_id) => {
+    console.log('id', project_id)
+    if (palettes.length && project_id) {
       return palettes.filter(palette => {
-        return palette.project_id === currentProject.id;
+        return palette.project_id === project_id;
       })
     }
   }
 
-  mapPalettes = () => {
-    return this.state.project_palettes.map(pal => {
+  mapPalettes = (palettes) => {
+    return palettes.map(pal => {
       return (
         <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
@@ -72,7 +72,8 @@ export class ControlForm extends Component {
   }
 
   render() {
-    const { deleteProject, currentProject } = this.props;
+    const { deleteProject, currentProject, palettes } = this.props;
+    const matchingPalettes = currentProject.id && palettes.length && this.mapPalettes(this.filterPalettesByProject(palettes, currentProject.id))
     return (
       <section className="ControlForm">
         <form className="project">
@@ -84,7 +85,7 @@ export class ControlForm extends Component {
         </form>
         <ColorGenerator />
         <section className="palettes">
-          {this.state.project_palettes.length > 0 && this.mapPalettes()}
+          {matchingPalettes}
         </section>
       </section>
     );
