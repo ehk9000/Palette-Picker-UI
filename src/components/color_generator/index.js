@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDeletePalette } from '../../thunks/fetchDeletePalette';
+import { fetchAddPalette } from '../../thunks/fetchAddPalette';
 
 export class ColorGenerator extends Component {
   constructor(props) {
@@ -72,8 +73,24 @@ export class ColorGenerator extends Component {
   }
 
   handleShuffleClick = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     this.generateColors()
+  }
+
+  handleSavePalette = (e) => {
+    e.preventDefault();
+    const {colors, palette_name} = this.state;
+    const {currentProject} = this.props;
+    const newPalette = {
+      color_1: colors[0].hex,
+      color_2: colors[1].hex,
+      color_3: colors[2].hex,
+      color_4: colors[3].hex,
+      color_5: colors[4].hex,
+      name: palette_name,
+      project_id: currentProject.id
+    }
+    this.props.addPalette(newPalette)
   }
 
   render() {
@@ -108,7 +125,7 @@ export class ColorGenerator extends Component {
         <section className="palette-head">
           <input
             name="palette_name"
-            onChange={e => this.handleName(e)}
+            onChange={this.handleName}
             value={currentPalette.name || palette_name}
             className="palette-name"
             type="text"
@@ -122,7 +139,7 @@ export class ColorGenerator extends Component {
             </button>
           </span>
           <div className="palette-controls">
-            <button className="palette-save">
+            <button className="palette-save" onClick={this.handleSavePalette}>
               Save Palette
               <i className="fas fa-save" />
             </button>
@@ -145,7 +162,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  deletePalette: (id) => dispatch(fetchDeletePalette(id))
+  deletePalette: (id) => dispatch(fetchDeletePalette(id)),
+  addPalette: (palette) => dispatch(fetchAddPalette(palette))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ColorGenerator);
