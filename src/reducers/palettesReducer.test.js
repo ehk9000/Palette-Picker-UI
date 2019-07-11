@@ -25,8 +25,8 @@ describe('palettesReducer', () => {
       const result = palettesReducer([], action);
 
       expect(result).toEqual(expected);
-    })
-  })
+    });
+  });
 
   describe('ADD_ALL_PALETTES', () => {
     it('should add all palettes to the state tree', () => {
@@ -56,7 +56,7 @@ describe('palettesReducer', () => {
     });
   });
 
-  it('Should not update notes array on state tree when no id matches', () => {
+  it('Should not update palettes array on state tree when no id matches', () => {
     let updatePalette = {
       id: 12, project_id: 3, name: 'test palette', color_1: 'A8E0FF',
       color_2: '8EE3F5', color_3: '70CAD1', color_4: '3E517A', color_5: 'B08EA2'

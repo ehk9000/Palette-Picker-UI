@@ -3,7 +3,7 @@
 @import './variable.scss';
 
 @import '../components/header/header';
-@import '../components/control_form/control_form';
-@import '../components/color_generator/color_generator';
+@import '../containers/control_form/control_form.scss';
+@import '../containers//color_generator/color_generator.scss';
 @import '../containers/Project_list/Project_list.scss';
 @import '../components/Project/Project.scss';

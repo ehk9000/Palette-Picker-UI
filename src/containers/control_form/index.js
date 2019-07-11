@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
+import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
 
 export class ControlForm extends Component {
   constructor(props) {
@@ -13,17 +14,17 @@ export class ControlForm extends Component {
   }
 
   componentDidMount() {
-    // let { palettes, currentProject } = this.props;
-    // if (palettes.length && currentProject.id) {
-    //   palettes = palettes.filter(palette => {
-    //     return palette.project_id === currentProject.id;
-    //   });
-    //   if (palettes)
-    //     this.setState({
-    //       project_name: currentProject.name,
-    //       project_palettes: palettes
-    //     });
-    // }
+    let { palettes, currentProject } = this.props;
+    if (palettes.length && currentProject.id) {
+      palettes = palettes.filter(palette => {
+        return palette.project_id === currentProject.id;
+      });
+      if (palettes)
+        this.setState({
+          project_name: currentProject.name,
+          project_palettes: palettes
+        });
+    }
   }
 
   setName = () => {
@@ -67,10 +68,8 @@ export class ControlForm extends Component {
           style={{background: `#${palette[`color_${i}`]}`}} 
         />
       )
-
       divColors.push(tag)
     }
-
     return divColors;
   }
 
@@ -90,14 +89,15 @@ export class ControlForm extends Component {
   }
 
   render() {
-    // let project = this.loadProject();
+    const { deleteProject, currentProject } = this.props;
+
     return (
       <section className="ControlForm">
         <form className="project">
           <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
           <div className="project-controls">
             <button className="project-save">{this.toggleProjectSave()}</button>
-            <button className="project-delete">Delete</button>
+            <button className="project-delete" onClick={() => deleteProject(currentProject.id)}>Delete</button>
           </div>
         </form>
         <ColorGenerator />
@@ -115,7 +115,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette))
+  selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette)),
+  deleteProject: (id) => dispatch(fetchDeleteProject(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlForm);
