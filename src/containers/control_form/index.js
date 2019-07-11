@@ -45,8 +45,17 @@ export class ControlForm extends Component {
     }
   }
 
-  mapPalettes = () => {
-    return this.state.project_palettes.map(pal => {
+  filterPalettesByProject = (palettes, project_id) => {
+    console.log('id', project_id)
+    if (palettes.length && project_id) {
+      return palettes.filter(palette => {
+        return palette.project_id === project_id;
+      })
+    }
+  }
+
+  mapPalettes = (palettes) => {
+    return palettes.map(pal => {
       return (
         <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
@@ -78,31 +87,31 @@ export class ControlForm extends Component {
     this.setState({[name]: value})
   }
 
-  toggleProjectSave = () => {
-    let value;
+  handleDelete = (e) => {
+    e.preventDefault();
+    const { deleteProject, currentProject } = this.props;
+    deleteProject(currentProject.id)
+  }
 
-    this.props.currentProject.name
-      ? value = 'Update'
-      :value = 'Save';
-    
-      return value;
+  toggleProjectSave = () => {
+    return this.props.currentProject.name ? 'Update' : 'Save';
   }
 
   render() {
-    const { deleteProject, currentProject } = this.props;
-
+    const { deleteProject, currentProject, palettes } = this.props;
+    const matchingPalettes = currentProject.id && palettes.length && this.mapPalettes(this.filterPalettesByProject(palettes, currentProject.id))
     return (
       <section className="ControlForm">
         <form className="project">
-          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
+          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name || currentProject.name} />
           <div className="project-controls">
             <button className="project-save">{this.toggleProjectSave()}</button>
-            <button className="project-delete" onClick={() => deleteProject(currentProject.id)}>Delete</button>
+            <button className="project-delete" onClick={this.handleDelete}>Delete</button>
           </div>
         </form>
         <ColorGenerator />
         <section className="palettes">
-          {this.state.project_palettes.length > 0 && this.mapPalettes()}
+          {matchingPalettes}
         </section>
       </section>
     );

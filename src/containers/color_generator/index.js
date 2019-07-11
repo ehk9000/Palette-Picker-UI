@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { fetchDeletePalette } from '../../thunks/fetchDeletePalette';
+import { fetchAddPalette } from '../../thunks/fetchAddPalette';
 
 export class ColorGenerator extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      palette_name: this.props.currentPalette.name|| '',
-      colors: this.bringInColors() || [{}, {}, {}, {}, {}]
+      palette_name: this.props.currentPalette.name || '',
+      colors: [{}, {}, {}, {}, {}]
     }
   }
 
@@ -17,14 +18,14 @@ export class ColorGenerator extends Component {
   }
 
   bringInColors = () => {
+    const {currentPalette} = this.props;
     let colors = [];
     for (let i = 1; i <= 5; i++) {
-      let {currentPalette} = this.props;
       let currColor = {
         hex: currentPalette[`color_${i}`],
         locked: false
       };
-      colors.push({currColor})
+      colors.push(currColor)
     }
     this.setState({colors})
   }
@@ -34,12 +35,6 @@ export class ColorGenerator extends Component {
       return {hex: this.generateHex(), locked: false};
     })
     this.setState({colors});
-  }
-
-  handleShuffle = (e) => {
-    e.preventDefault()
-    this.generateColors()
-
   }
 
   generateHex = () => {
@@ -71,8 +66,35 @@ export class ColorGenerator extends Component {
     this.setState({ colors })
   }
 
+  handleDelete = (e) => {
+    const {currentPalette, deletePalette} = this.props
+    e.preventDefault()
+    deletePalette(currentPalette.id)
+  }
+
+  handleShuffleClick = (e) => {
+    e.preventDefault()
+    this.generateColors()
+  }
+
+  handleSavePalette = (e) => {
+    e.preventDefault();
+    const {colors, palette_name} = this.state;
+    const {currentProject} = this.props;
+    const newPalette = {
+      color_1: colors[0].hex,
+      color_2: colors[1].hex,
+      color_3: colors[2].hex,
+      color_4: colors[3].hex,
+      color_5: colors[4].hex,
+      name: palette_name,
+      project_id: currentProject.id
+    }
+    this.props.addPalette(newPalette)
+  }
+
   render() {
-    const currPalette = this.props.currentPalette;
+    const {currentPalette} = this.props;
     const {palette_name, colors} = this.state;
     const colorFields = colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
@@ -89,7 +111,7 @@ export class ColorGenerator extends Component {
           <input
             name={`color${i}`}
             onChange={(e) => this.updateColor(e)}
-            value={currPalette[`color_${i}`] || this.state.colors[index].hex}
+            value={currentPalette[`color_${i}`] || this.state.colors[index].hex}
             className="palette-color"
             type="text"
             maxLength="6"
@@ -103,25 +125,25 @@ export class ColorGenerator extends Component {
         <section className="palette-head">
           <input
             name="palette_name"
-            onChange={e => this.handleName(e)}
-            value={currPalette.name || palette_name}
+            onChange={this.handleName}
+            value={currentPalette.name || palette_name}
             className="palette-name"
             type="text"
             placeholder="Palette Name"
             maxLength="10"
           />
           <span>
-            <button className="palette-shuffle" onClick={e => this.handleShuffle(e)}>
+            <button onClick={this.handleShuffleClick} className="palette-shuffle">
               Shuffle Colors
               <i className="fas fa-dice" />
             </button>
           </span>
           <div className="palette-controls">
-            <button className="palette-save">
+            <button className="palette-save" onClick={this.handleSavePalette}>
               Save Palette
               <i className="fas fa-save" />
             </button>
-            <button className="palette-delete">
+            <button className="palette-delete" onClick={(e) => this.handleDelete(e)}>
               Delete Palette
               <i className="far fa-trash-alt" />
             </button>
@@ -139,4 +161,9 @@ const mapStateToProps = (state) => ({
   palettes: state.palettes
 })
 
-export default connect(mapStateToProps, null)(ColorGenerator);
+const mapDispatchToProps = (dispatch) => ({
+  deletePalette: (id) => dispatch(fetchDeletePalette(id)),
+  addPalette: (palette) => dispatch(fetchAddPalette(palette))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColorGenerator);
