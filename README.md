@@ -25,6 +25,6 @@ The backend repository can be found [here](https://github.com/ehk9000/Palette-Pi
 * Heroku 
 
 ## Collaborators 
-[Erik Konner](https://github.com/ehk9000)
-[Ryan Barnett](https://github.com/RyanDBarnett)
-[Justin Pyktel](https://github.com/SiimonStark)
+* [Erik Konner](https://github.com/ehk9000)
+* [Ryan Barnett](https://github.com/RyanDBarnett)
+* [Justin Pyktel](https://github.com/SiimonStark)
