@@ -1,4 +1,4 @@
-import { updateProject, setLoading, setError } from '../actions';
+import { updateProject, selectCurrentProject, setLoading, setError } from '../actions';
 
 export const fetchPutProject = (project) => {
   return async (dispatch) => {
@@ -20,6 +20,8 @@ export const fetchPutProject = (project) => {
       }
 
       const project = await response.json();
+      console.log(project)
+      dispatch(selectCurrentProject(project))
       dispatch(setLoading(false));
       dispatch(updateProject(project));
     } catch(error) {

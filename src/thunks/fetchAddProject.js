@@ -1,4 +1,4 @@
-import { addProject, setLoading, setError } from '../actions';
+import { addProject, selectCurrentProject, setLoading, setError } from '../actions';
 
 export const fetchAddProject = (project) => {
   return async (dispatch) => {
@@ -22,6 +22,7 @@ export const fetchAddProject = (project) => {
       const project = await response.json();
       dispatch(setLoading(false));
       dispatch(addProject(project));
+      dispatch(selectCurrentProject(project));
     } catch(error) {
       dispatch(setError(error.message));
     }

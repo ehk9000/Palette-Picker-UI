@@ -96,7 +96,8 @@ export class ControlForm extends Component {
     deleteProject(currentProject.id)
   }
 
-  toggleProjectThunk = () => {
+  toggleProjectThunk = (e) => {
+    e.preventDefault()
     const {addProject, updateProject, currentProject} = this.props;
     const {project_name} = this.state;
     return currentProject.id ? updateProject(currentProject) : addProject({name: project_name});
@@ -115,7 +116,7 @@ export class ControlForm extends Component {
         <form className="project">
           <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name || currentProject.name} />
           <div className="project-controls">
-            <button className="project-save" onClick={() => this.toggleProjectThunk()}>{this.toggleProjectSave()}</button>
+            <button className="project-save" onClick={(e) => this.toggleProjectThunk(e)}>{this.toggleProjectSave()}</button>
             <button className="project-delete" onClick={this.handleDelete}>Delete</button>
           </div>
         </form>
