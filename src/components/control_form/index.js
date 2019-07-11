@@ -61,7 +61,7 @@ export class ControlForm extends Component {
     return (
       <section className="ControlForm">
         <form className="project">
-          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
+          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.props.currentProject.name}/>
           <div className="project-controls">
             <button className="project-save">Save</button>
             <button className="project-delete" onClick={() => deleteProject(currentProject.id)}>Delete</button>
