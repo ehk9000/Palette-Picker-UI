@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { fetchDeletePalette } from '../../thunks/fetchDeletePalette';
 
 export class ColorGenerator extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      palette_name: this.props.currentPalette.name|| '',
-      colors: this.bringInColors() || [{}, {}, {}, {}, {}]
+      palette_name: this.props.currentPalette.name || '',
+      colors: [{}, {}, {}, {}, {}]
     }
   }
 
@@ -17,14 +17,14 @@ export class ColorGenerator extends Component {
   }
 
   bringInColors = () => {
+    const {currentPalette} = this.props;
     let colors = [];
     for (let i = 1; i <= 5; i++) {
-      let {currentPalette} = this.props;
       let currColor = {
         hex: currentPalette[`color_${i}`],
         locked: false
       };
-      colors.push({currColor})
+      colors.push(currColor)
     }
     this.setState({colors})
   }
@@ -65,8 +65,14 @@ export class ColorGenerator extends Component {
     this.setState({ colors })
   }
 
+  handleDelete = (e) => {
+    const {currentPalette, deletePalette} = this.props
+    e.preventDefault()
+    deletePalette(currentPalette.id)
+  }
+
   render() {
-    const currPalette = this.props.currentPalette;
+    const {currentPalette} = this.props;
     const {palette_name, colors} = this.state;
     const colorFields = colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
@@ -83,7 +89,7 @@ export class ColorGenerator extends Component {
           <input
             name={`color${i}`}
             onChange={(e) => this.updateColor(e)}
-            value={currPalette[`color_${i}`] || this.state.colors[index].hex}
+            value={currentPalette[`color_${i}`] || this.state.colors[index].hex}
             className="palette-color"
             type="text"
             maxLength="6"
@@ -98,7 +104,7 @@ export class ColorGenerator extends Component {
           <input
             name="palette_name"
             onChange={e => this.handleName(e)}
-            value={currPalette.name || palette_name}
+            value={currentPalette.name || palette_name}
             className="palette-name"
             type="text"
             placeholder="Palette Name"
@@ -115,7 +121,7 @@ export class ColorGenerator extends Component {
               Save Palette
               <i className="fas fa-save" />
             </button>
-            <button className="palette-delete">
+            <button className="palette-delete" onClick={(e) => this.handleDelete(e)}>
               Delete Palette
               <i className="far fa-trash-alt" />
             </button>
@@ -133,4 +139,8 @@ const mapStateToProps = (state) => ({
   palettes: state.palettes
 })
 
-export default connect(mapStateToProps, null)(ColorGenerator);
+const mapDispatchToProps = (dispatch) => ({
+  deletePalette: (id) => dispatch(fetchDeletePalette(id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColorGenerator);
