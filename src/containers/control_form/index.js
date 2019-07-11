@@ -3,6 +3,8 @@ import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
 import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
+import { fetchAddPalette } from '../../thunks/fetchAddPalette';
+import { fetchUpdatePalette } from '../../thunks/fetchUpdatePalette';
 
 export class ControlForm extends Component {
   constructor(props) {
@@ -93,11 +95,23 @@ export class ControlForm extends Component {
     deleteProject(currentProject.id)
   }
 
+  submitProject = () => {
+  if: <allProjects>.includes(<project>.id)
+    then: run PUTmethod
+    else: run POSTmethod
+  }
+
   toggleProjectSave = () => {
+    const this.props;
+    const editBtn = <button className="project-save" onClick={}>Update</button>
+    const saveBtn = <button className="project-save" onClick={this.props.addProject()}>Save</button>
     return this.props.currentProject.name ? 'Update' : 'Save';
   }
 
   render() {
+    const editBtn = <button className="project-save">{this.toggleProjectSave()}</button>
+    const editBtn
+    const projectBtn = this.props.currentProject.name ? 
     const { deleteProject, currentProject, palettes } = this.props;
     const matchingPalettes = currentProject.id && palettes.length && this.mapPalettes(this.filterPalettesByProject(palettes, currentProject.id))
     return (
@@ -125,6 +139,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette)),
+  addProject: (palette) => dispatch(fetchAddPalette(palette)),
   deleteProject: (id) => dispatch(fetchDeleteProject(id))
 });
 
