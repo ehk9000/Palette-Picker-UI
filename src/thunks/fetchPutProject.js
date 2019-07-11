@@ -1,9 +1,9 @@
-import { updatePalette, setLoading, setError } from '../actions';
+import { updateProject, setLoading, setError } from '../actions';
 
-export const fetchPutPalette = (project) => {
+export const fetchPutProject = (project) => {
   return async (dispatch) => {
-    const url = `http://localhost:3000/api/v1/palettes/${palette.id}`;
-    const body = JSON.stringify(palette)
+    const url = `http://localhost:3000/api/v1/palettes/${project.id}`;
+    const body = JSON.stringify(project)
     const options = {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },
@@ -19,9 +19,9 @@ export const fetchPutPalette = (project) => {
         throw Error(response.statusText);
       }
 
-      const palette = await response.json();
+      const project = await response.json();
       dispatch(setLoading(false));
-      dispatch(updatePalette(palette));
+      dispatch(updateProject(project));
     } catch(error) {
       dispatch(setError(error.message));
     }
