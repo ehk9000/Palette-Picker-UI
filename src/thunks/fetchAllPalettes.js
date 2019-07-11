@@ -2,7 +2,8 @@ import { addAllPalettes, setLoading, setError } from '../actions/index';
 
 export const fetchAllPalettes = () => {
   return async (dispatch) => {
-    const url = 'http://localhost:3000/api/v1/palettes';
+    const base = "https://color-me-newton-api.herokuapp.com";
+    const url = `${base}/api/v1/palettes`;
 
     try {
       dispatch(setLoading(true));

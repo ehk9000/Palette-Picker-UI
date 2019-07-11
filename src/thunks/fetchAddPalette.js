@@ -2,7 +2,8 @@ import { addPalette, selectCurrentPalette, setLoading, setError } from '../actio
 
 export const fetchAddPalette = (palette) => {
   return async (dispatch) => {
-    const url = 'http://localhost:3000/api/v1/palettes';
+    const base = "https://color-me-newton-api.herokuapp.com";
+    const url = `${base}/api/v1/palettes`;
     const body = JSON.stringify(palette)
     const options = {
       method: 'POST',

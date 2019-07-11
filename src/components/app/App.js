@@ -6,6 +6,8 @@ import { fetchAllPalettes } from '../../thunks/fetchAllPalettes';
 import  Project_list from '../../containers/Project_list';
 import ControlForm from '../../containers/control_form';
 import Header from '../header';
+require("dotenv").config();
+process.env.
 
 export class App extends Component {
   constructor() {
