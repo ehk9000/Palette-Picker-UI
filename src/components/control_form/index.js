@@ -4,27 +4,48 @@ import { connect } from 'react-redux';
 import { selectCurrentPalette } from '../../actions';
 
 export class ControlForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      project_name: '',
+      project_name: this.setName(),
       project_palettes: []
     }
   }
 
   componentDidMount() {
-    let { palettes, currentProject } = this.props
+    // let { palettes, currentProject } = this.props;
+    // if (palettes.length && currentProject.id) {
+    //   palettes = palettes.filter(palette => {
+    //     return palette.project_id === currentProject.id;
+    //   });
+    //   if (palettes)
+    //     this.setState({
+    //       project_name: currentProject.name,
+    //       project_palettes: palettes
+    //     });
+    // }
+  }
+
+  setName = () => {
+    return this.props.currentProject.name;
+  }
+
+  loadProject = () => {
+    let { palettes, currentProject } = this.props;
     if (palettes.length && currentProject.id) {
       palettes = palettes.filter(palette => {
         return palette.project_id === currentProject.id;
-      })
-      if (palettes) this.setState({ project_name: currentProject.name, project_palettes: palettes })
+      });
+      if (palettes)
+        this.setState({
+          project_name: currentProject.name,
+          project_palettes: palettes
+        });
     }
   }
 
   mapPalettes = () => {
     return this.state.project_palettes.map(pal => {
-      console.log('pal', pal)
       return (
         <article key={pal.id} onClick={() => this.props.selectCurrentPalette(pal)} className="palette-item">
           <h3>{pal.name}</h3>
@@ -58,13 +79,24 @@ export class ControlForm extends Component {
     this.setState({[name]: value})
   }
 
+  toggleProjectSave = () => {
+    let value;
+
+    this.props.currentProject.name
+      ? value = 'Update'
+      :value = 'Save';
+    
+      return value;
+  }
+
   render() {
+    // let project = this.loadProject();
     return (
       <section className="ControlForm">
         <form className="project">
           <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name}/>
           <div className="project-controls">
-            <button className="project-save">Save</button>
+            <button className="project-save">{this.toggleProjectSave()}</button>
             <button className="project-delete">Delete</button>
           </div>
         </form>

@@ -26,7 +26,6 @@ export class ColorGenerator extends Component {
       };
       colors.push({currColor})
     }
-    console.log('bIC: colors', colors);
     this.setState({colors})
   }
 
@@ -67,10 +66,8 @@ export class ColorGenerator extends Component {
   }
 
   render() {
-    console.log("CurrPal", this.props.currentPalette);
     const currPalette = this.props.currentPalette;
     const {palette_name, colors} = this.state;
-    // console.log(colors[0].id)
     const colorFields = colors.map((colorObj, index) => {
       const lockType = colorObj.locked ? 'lock' : 'lock-open';
       const i = index + 1;
