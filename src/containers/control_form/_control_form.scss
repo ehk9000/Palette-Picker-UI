@@ -87,3 +87,9 @@
   width: 30px;
   border: ridge silver 2px;
 }
+
+.create-palette {
+  &::disabled {
+    background: grey;
+  }
+}

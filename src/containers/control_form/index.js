@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ColorGenerator from '../color_generator';
 import { connect } from 'react-redux';
-import { selectCurrentPalette } from '../../actions';
+import { selectCurrentPalette, clearCurrentPalette } from '../../actions';
 import { fetchDeleteProject } from '../../thunks/fetchDeleteProject';
 import { fetchAddProject } from '../../thunks/fetchAddProject';
 import { fetchPutProject } from '../../thunks/fetchPutProject';
@@ -11,7 +11,7 @@ export class ControlForm extends Component {
     super(props)
     this.state = {
       project_name: this.setName(),
-      project_palettes: []
+      project_palettes: [],
     }
   }
 
@@ -108,19 +108,39 @@ export class ControlForm extends Component {
   }
 
   render() {
-    const { currentProject, palettes } = this.props;
+    const { currentProject, palettes, currentPalette } = this.props;
     const matchingPalettes = currentProject.id && palettes.length && this.mapPalettes(this.filterPalettesByProject(palettes, currentProject.id))
     return (
       <section className="ControlForm">
         <form className="project">
-          <input name="project_name" onChange={(e) => this.handleChange(e)} type="test" placeholder="Project Title" value={this.state.project_name || currentProject.name} />
+          <input
+            name="project_name"
+            onChange={e => this.handleChange(e)}
+            type="test"
+            placeholder="Project Title"
+            value={this.state.project_name || currentProject.name}
+          />
           <div className="project-controls">
-            <button className="project-save" onClick={(e) => this.toggleProjectThunk(e)}>{this.toggleProjectSave()}</button>
-            <button className="project-delete" onClick={this.handleDelete}>Delete</button>
+            <button
+              className="project-save"
+              onClick={e => this.toggleProjectThunk(e)}
+            >
+              {this.toggleProjectSave()}
+            </button>
+            <button className="project-delete" onClick={this.handleDelete}>
+              Delete
+            </button>
           </div>
         </form>
-        <ColorGenerator />
+        <ColorGenerator isNewPalette={this.state.isNewPalette} />
         <section className="palettes">
+          <button
+            onClick={this.props.clearCurrentPalette}
+            active={(!currentPalette.id).toString()}
+            className="palette-item create-palette"
+          >
+            Create New Palette
+          </button>
           {matchingPalettes}
         </section>
       </section>
@@ -138,7 +158,8 @@ const mapDispatchToProps = (dispatch) => ({
   selectCurrentPalette: (palette) => dispatch(selectCurrentPalette(palette)),
   addProject: (project) => dispatch(fetchAddProject(project)),
   updateProject: (project) => dispatch(fetchPutProject(project)),
-  deleteProject: (id) => dispatch(fetchDeleteProject(id))
+  deleteProject: (id) => dispatch(fetchDeleteProject(id)),
+  clearCurrentPalette: () => dispatch(clearCurrentPalette())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlForm);
