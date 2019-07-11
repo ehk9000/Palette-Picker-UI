@@ -1,4 +1,4 @@
-import { setLoading, setError, deleteProject } from '../actions';
+import { setLoading, setError, deleteProject, clearCurrentProject } from '../actions';
 
 export const fetchDeleteProject = (id) => {
   return async (dispatch) => {
@@ -18,6 +18,7 @@ export const fetchDeleteProject = (id) => {
       }
 
       dispatch(deleteProject(id));
+      dispatch(clearCurrentProject())
       dispatch(setLoading(false));
     } catch(error) {
       dispatch(setError(error.message))
